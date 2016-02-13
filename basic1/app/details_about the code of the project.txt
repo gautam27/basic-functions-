@@ -1,0 +1,241 @@
+/*****************************************************MainActivity java code******************************************/
+
+
+i have writen logic of add 1 and sub 1 in this java file 
+also it contais detais how to set the result in he xml file after any operations
+
+
+package com.example.deepakgautam.basic1;
+
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class MainActivity extends AppCompatActivity
+{
+
+    Button add,sub;
+    TextView txt;
+    int count;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+            //   my code
+        txt= (TextView) findViewById(R.id.textview);//  connecting the varible of that type  with the respective xml
+        add= (Button) findViewById(R.id.add_button);
+        sub=(Button) findViewById(R.id.sub_button);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 count+=1;
+                txt.setText(" your total is "+ count);
+
+            }
+        });
+
+        sub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count -= 1;
+                txt.setText(" your total is "+ count);
+
+            }
+        });
+    }
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+
+
+
+
+/*****************************************************************MainActivity java code end ****************************/
+
+
+
+
+
+
+/***********************************************************splash  java code  ***************************************/
+
+package com.example.deepakgautam.basic1;
+
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+
+/**
+ * Created by deepak gautam on 12-02-2016.
+ */
+public class splash extends AppCompatActivity {
+
+MediaPlayer oursong;
+     @Override
+     protected void onCreate(Bundle deepak) {
+          super.onCreate(deepak);
+          setContentView(R.layout.splash);
+
+          oursong= MediaPlayer.create(splash.this,R.raw.tune1);
+             oursong.start();
+
+          //  creating thread for the timer of the spash screen
+          Thread timer = new Thread() {
+               public void run() {
+                    try {
+                         sleep(5000);//sleep forthe 5 sec and than go to the   finally bloch from where set next
+                         // activity class, in the Android manifest file we have   given activity name
+                         // to different java class , just set current activity as the activity of the
+                         // mainactivity class
+
+
+                    } catch (InterruptedException e) {
+                         e.printStackTrace();
+
+                    } finally {
+                         Intent gotostartingpoint = new Intent("com.example.deepakgautam.basic1.MENU");//
+                         // inside the INTENT the string is same which we have set in the manifest file
+                         // for the menu class
+
+                         startActivity(gotostartingpoint);
+
+                    }
+               }
+          };
+          timer.start();
+
+     }
+
+     @Override
+     protected void onPause() {// as soon as we  set the activity class  as another class onpause method is called
+          // and we finish the old activity class (splas class) permanently so that if we use
+          //  back ward key than again splash screen will not open again
+          super.onPause();
+          oursong.stop();
+          finish();
+     }
+
+
+}
+
+/*************************************************splash java code end here ********************************************/
+
+
+
+/*********************************************************list of menu*************************************************/
+
+now i included a list of options which we want to acess after th spalsh screen 
+
+we will get a  list of activity class which we can acss after the  splash 
+
+the java code of that menue class is 
+package com.example.deepakgautam.basic1;
+
+import android.app.ListActivity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+/**
+ * Created by deepak gautam on 13-02-2016.
+ */
+
+
+public class menu extends ListActivity
+{
+    // this is the string contain the list of class which we can acess
+
+      String  options[]={"MainActivity","buttons","option1","pption2","option3","option4","option5","option6"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+    //// this part is very confussing what  basicall it is creating a adapter,
+    // just  remind we have to use this 
+    // as soon as this activity is loaded the list of   actity comes 
+    // sofor acessing those lists need a adapte of listtype 
+      
+
+        super.onCreate(savedInstanceState);
+        setListAdapter(new ArrayAdapter<String>(menu.this,android.R.layout.simple_list_item_activated_1,options));
+    }
+
+
+// as soon as we click on any option of the list we comes to this point 
+//  from here we  set the intent of the next class which we want to acessed
+// and start activity of that class
+// form the splash  mainfets we have set the next class as the menue class whichu can see in he mainfest  file
+
+    protected void onListItemClick(ListView l,View v,int position ,long id)
+    {
+        super. onListItemClick( l,v,position ,id);
+
+        String chosed_option=options[position];
+
+        try
+        {
+            Class our_class=Class.forName("com.example.deepakgautam.basic1." + chosed_option);
+            Intent own_intentent=new Intent(menu.this,our_class);
+               startActivity(own_intentent);
+
+        }
+        catch(ClassNotFoundException e)
+        {
+          e.printStackTrace();
+        }
+    }
+}
+
+
+/*********************************************************list of menu  end*************************************************/

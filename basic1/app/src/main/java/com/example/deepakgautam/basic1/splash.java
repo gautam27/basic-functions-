@@ -35,9 +35,9 @@ MediaPlayer oursong;
                          e.printStackTrace();
 
                     } finally {
-                         Intent gotostartingpoint = new Intent("com.example.deepakgautam.basic1.MainActivity");//
+                         Intent gotostartingpoint = new Intent("com.example.deepakgautam.basic1.MENU");//
                          // inside the INTENT the string is same which we have set in the manifest file
-                         // for the MainActivity class
+                         // for the menu class
 
                          startActivity(gotostartingpoint);
 
