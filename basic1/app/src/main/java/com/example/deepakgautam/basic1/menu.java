@@ -13,12 +13,15 @@ import android.widget.ListView;
 
 public class menu extends ListActivity
 {
-      String  options[]={"MainActivity","buttons","option1","pption2","option3","option4","option5","option6"};
+      String  options[]={"MainActivity","magic","email","pption2","option3","option4","option5","option6"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.menu);
+
         setListAdapter(new ArrayAdapter<String>(menu.this,android.R.layout.simple_list_item_activated_1,options));
     }
 

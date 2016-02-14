@@ -14,7 +14,8 @@ public class splash extends AppCompatActivity {
 
 MediaPlayer oursong;
      @Override
-     protected void onCreate(Bundle deepak) {
+     protected void onCreate(Bundle deepak)
+     {
           super.onCreate(deepak);
           setContentView(R.layout.splash);
 
